@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sign-Up Today!</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+
+	<br>
+
+	<!-- Jumbotron -->
+	<div class="jumbotron">
+		<h1 class="text-center">Train Schedule</h1>
+	</div>
+
+	<div class="row">
+
+		<!-- Sign-Up Panel-->
+		<div class="col-lg-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Add Train</h3>
+				</div>
+				<div class="panel-body">
+
+					<!-- Sign-up Form (note the various input "types")-->
+					<form role="form">
+						<div class="form-group">
+							<label for="text">Train Name:</label>
+							<input type="text" class="form-control" id="nameinput">
+						</div>
+						<div class="form-group">
+							<label for="text">Destination</label>
+							<input type="email" class="form-control" id="destinationinput">
+						</div>
+						<div class="form-group">
+							<label for="text">First Train Time (HH:mm - military time)</label>
+							<input type="number" class="form-control" id="traintimeinput">
+						</div>
+						<div class="form-group">
+							<label for="text">Frequency</label>
+							<input type="number" class="form-control" id="frequencyinput">
+						</div>
+						
+						<button type="submit" class="btn btn-default" id="addTrain">Submit</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Train</h3></div>
+            <div class="panel-body"><span> </span>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Train Name</th>
+                                <th>Destination </th>
+                                <th>Frenquency (min)</th>
+                                <th>Next Arrival </th>
+                                <th>Minutes Away</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Trenton Express</td>
+                                <td>Trenton </td>
+                                <td>25 </td>
+                                <td>05:35 PM</td>
+                                <td>10 </td>
+                            </tr>
+                            <tr>
+                                <td>Oregon Trail</td>
+                                <td>Salem, Oregon</td>
+                                <td>3600 </td>
+                                <td>01:39 PM</td>
+                                <td>1154 </td>
+                            </tr>
+                            <tr>
+                                <td>Midnight Carriage</td>
+                                <td>Philadelphia </td>
+                                <td>15 </td>
+                                <td>05:35 PM</td>
+                                <td>10 </td>
+                            </tr>
+                            <tr>
+                                <td>Sing Sing Caravan</td>
+                                <td>Atlanta </td>
+                                <td>45 </td>
+                                <td>05:53 PM</td>
+                                <td>28 </td>
+                            </tr>
+                            <tr>
+                                <td>Boston Bus</td>
+                                <td>Boston </td>
+                                <td>65 </td>
+                                <td>05:50 PM</td>
+                                <td>25 </td>
+                            </tr>
+                            <tr>
+                                <td>California Caravan </td>
+                                <td>San Francisco </td>
+                                <td>6000 </td>
+                                <td>01:25 AM</td>
+                                <td>4740 </td>
+                            </tr>
+                            <tr>
+                                <td>Analben's Train </td>
+                                <td>Florida </td>
+                                <td>25 </td>
+                                <td>05:28 PM </td>
+                                <td>3 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Latest compiled and minified CSS & JS -->
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<!-- LINK TO FIREBASE GOES HERE -->
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+<script>
+
+// ========================================== START CODING BELOW!!
+
+// Initialize Firebase
+var config = {
+	apiKey: "AIzaSyA5eYKsB8T2q6rMGdKSvac6eQsWTzsZEjE",
+	authDomain: "fir-recent-user.firebaseapp.com",
+	databaseURL: "https://fir-recent-user.firebaseio.com",
+	storageBucket: "fir-recent-user.appspot.com",
+};
+firebase.initializeApp(config);
+
+// Create a variable to reference the database
+var database = firebase.database();
+
+// Initial Values
+var name = "";
+var email = "";
+var age = 0;
+var comment = "";
+
+
+// Capture Button Click
+$("#addUser").on("click", function() {
+
+	// YOUR TASK!!!
+	// Code in the logic for storing and retrieving the most recent user.
+	// Dont forget to provide initial data to your Firebase database.
+
+	name = $('#nameinput').val().trim();
+	email = $('#emailinput').val().trim();
+	age = $('#ageinput').val().trim();
+	comment = $('#commentinput').val().trim();
+
+	database.ref().set({
+		name: name,
+		email: email,
+		age: age,
+		comment: comment
+	});
+
+	// Don't refresh the page!
+	return false;
+});
+
+//Firebase watcher + initial loader HINT: .on("value")
+database.ref().on("value", function(snapshot) {
+
+	// Log everything that's coming out of snapshot
+	console.log(snapshot.val());
+	console.log(snapshot.val().name);
+	console.log(snapshot.val().email);
+	console.log(snapshot.val().age);
+	console.log(snapshot.val().comment);
+
+	// Change the HTML to reflect
+	$("#namedisplay").html(snapshot.val().name);
+	$("#emaildisplay").html(snapshot.val().email);
+	$("#agedisplay").html(snapshot.val().age);
+	$("#commentdisplay").html(snapshot.val().comment);
+
+
+// Handle the errors
+}, function(errorObject) {
+
+	console.log("Errors handled: " + errorObject.code);
+});
+
+</script>
+
+</body>
+</html>

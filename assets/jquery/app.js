@@ -38,10 +38,10 @@ $('#addTrain').on("click", function() {
 	return false;
 });
 
-//Firebase watcher + initial loader HINT: .on("value")
+
 database.ref().on("value", function(snapshot) {
 
-	// Log everything that's coming out of snapshot
+	
 	console.log(snapshot.val());
 	console.log(snapshot.val().trainName);
 	console.log(snapshot.val().destination);

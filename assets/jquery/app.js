@@ -25,14 +25,16 @@ $('#addTrain').on("click", function() {
 	time = $('#timeinput').val().trim();
 	frequency = $('#frequencyinput').val().trim();
 
+
 	database.ref().set({
 		trainName: trainName,
 		destination: destination,
 		time: time,
-		frequency: frequency
+		frequency: frequency,
+		dateAdded: firebase.database.ServerValue.TIMESTAMP
+
 	});
 
-	
 	return false;
 });
 
@@ -47,10 +49,10 @@ database.ref().on("value", function(snapshot) {
 	console.log(snapshot.val().frequency);
 
 	// Change the HTML to reflect
-	$("#trainNamedisplay").html(snapshot.val().trainName);
-	$("#emaildisplay").html(snapshot.val().destination);
-	$("#agedisplay").html(snapshot.val().time);
-	$("#commentdisplay").html(snapshot.val().frequency);
+	$("#namedisplay").html(snapshot.val().trainName);
+	$("#destinationdisplay").html(snapshot.val().destination);
+	$("#frequencydisplay").html(snapshot.val().frequency);
+	$("#timedisplay").html(snapshot.val().time);
 
 
 // Handle the errors
